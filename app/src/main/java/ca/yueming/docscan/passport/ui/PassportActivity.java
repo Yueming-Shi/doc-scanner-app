@@ -161,7 +161,8 @@ public class PassportActivity extends AppCompatActivity {
                 out = PassportRenderer.photo(src, in.crop);
                 int[] px = new int[out.getWidth() * out.getHeight()];
                 out.getPixels(px, 0, out.getWidth(), 0, 0, out.getWidth(), out.getHeight());
-                double[] bg = PassportChecks.backgroundStats(px, out.getWidth(), out.getHeight());
+                double[] bg = PassportChecks.backgroundStats(px, out.getWidth(), out.getHeight(),
+                        PassportChecks.validArea(in.crop, src.getWidth(), src.getHeight()));
                 in.backgroundMean = bg[0]; in.backgroundStd = bg[1];
                 AppLog.i(TAG, String.format("head crown=%.0f chin=%.0f scale=%.3f pad=%b",
                         head.crownY, head.chinY, in.crop.scale, in.crop.needsPadding));

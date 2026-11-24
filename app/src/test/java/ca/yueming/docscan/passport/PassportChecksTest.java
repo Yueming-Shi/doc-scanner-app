@@ -58,11 +58,30 @@ public class PassportChecksTest {
         int w = 120, h = 160;
         int[] px = new int[w * h];
         Arrays.fill(px, 0xFFF0F0F0);
-        double[] s = PassportChecks.backgroundStats(px, w, h);
+        int[] all = {0, 0, w, h};
+        double[] s = PassportChecks.backgroundStats(px, w, h, all);
         assertEquals(240, s[0], 1e-9);
         assertEquals(0, s[1], 1e-9);
         for (int i = 0; i < w * 10; i += 2) px[i] = 0xFF000000; // stripes in top-left patch
-        s = PassportChecks.backgroundStats(px, w, h);
+        s = PassportChecks.backgroundStats(px, w, h, all);
         assertTrue(s[1] > PassportChecks.MAX_BG_STD);
+    }
+
+    /** White padding must not count as background: a dark photo padded with white still reads dark. */
+    @Test public void paddingIgnored() {
+        int w = 120, h = 160;
+        int[] px = new int[w * h];
+        Arrays.fill(px, 0xFFFFFFFF);
+        for (int y = 30; y < h; y++) for (int x = 20; x < 100; x++) px[y * w + x] = 0xFF202020;
+        double[] s = PassportChecks.backgroundStats(px, w, h, new int[] {20, 30, 100, 160});
+        assertEquals(32, s[0], 1e-9);
+    }
+
+    @Test public void validAreaOfPaddedCrop() {
+        PassportCropper.Crop c = PassportCropper.crop(new HeadEstimator.Head(100, 50, 450), 1000, 1000);
+        int[] v = PassportChecks.validArea(c, 1000, 1000);
+        assertTrue(v[0] > 0);                       // left padding
+        assertEquals(Math.ceil(-c.top * c.scale), v[1], 0);
+        assertTrue(v[2] >= PassportSpec.OUT_W);     // no right padding
     }
 }

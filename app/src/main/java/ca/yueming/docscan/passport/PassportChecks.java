@@ -81,19 +81,31 @@ public final class PassportChecks {
     }
 
     /**
-     * Background brightness/variation from two square patches in the top corners of the output photo
-     * (beside the head, above the shoulders). Returns {mean, std} of luma.
+     * Background brightness/variation from two square patches in the top corners of the real photo area
+     * (beside the head, above the shoulders), ignoring white padding added outside the source image.
+     * {@code valid} = {left, top, right, bottom} of the source image inside the output, in output pixels.
+     * Returns {mean, std} of luma.
      */
-    public static double[] backgroundStats(int[] argb, int w, int h) {
-        int s = Math.max(1, w / 12);
+    public static double[] backgroundStats(int[] argb, int w, int h, int[] valid) {
+        int l = Math.max(0, valid[0]), t = Math.max(0, valid[1]);
+        int r = Math.min(w, valid[2]), b = Math.min(h, valid[3]);
+        if (r <= l || b <= t) throw new IllegalArgumentException("empty photo area");
+        int s = Math.max(1, Math.min(Math.min(r - l, b - t), w / 12));
         double sum = 0, sq = 0;
         int n = 0;
-        int[] xs = {0, w - s};
-        for (int x0 : xs) for (int y = 0; y < Math.min(s, h); y++) for (int x = x0; x < x0 + s; x++) {
+        int[] xs = {l, r - s};
+        for (int x0 : xs) for (int y = t; y < t + s; y++) for (int x = x0; x < x0 + s; x++) {
             int v = PageFilter.luma(argb[y * w + x]);
             sum += v; sq += (double) v * v; n++;
         }
         double mean = sum / n;
         return new double[] {mean, Math.sqrt(Math.max(0, sq / n - mean * mean))};
+    }
+
+    /** Where the source image lands inside the output, {left, top, right, bottom} in output pixels. */
+    public static int[] validArea(PassportCropper.Crop c, int srcW, int srcH) {
+        return new int[] {
+            (int) Math.ceil(-c.left * c.scale), (int) Math.ceil(-c.top * c.scale),
+            (int) Math.floor((srcW - c.left) * c.scale), (int) Math.floor((srcH - c.top) * c.scale)};
     }
 }
