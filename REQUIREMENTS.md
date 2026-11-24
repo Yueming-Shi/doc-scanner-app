@@ -5,7 +5,7 @@ Inspiration is only the publicly known feature set of document-scanner apps (Cam
 No CamScanner code, APK, or assets were decompiled, reverse-engineered, or copied.
 
 ## Platform
-- Android 7.0+ (minSdk 24), target/compile SDK 35. Java for app code; Gradle Kotlin DSL only for build scripts.
+- Android 8.0+ (minSdk 26, for java.time), target/compile SDK 35. Java for app code; Gradle Kotlin DSL only for build scripts.
 - Needs Google Play services (ML Kit Document Scanner UI is delivered by Play services). Yueming's Samsung S24 has it.
 
 ## A. Document scan

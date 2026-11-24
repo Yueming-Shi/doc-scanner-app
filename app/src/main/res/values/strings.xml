@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Doc Scanner</string>
+    <string name="scan_title">Scan documents</string>
+    <string name="passport_title">Canadian passport photo</string>
+    <string name="add_pages">Scan / import pages</string>
+    <string name="export_pdf">Export PDF</string>
+    <string name="export_jpeg">Export JPEG</string>
+    <string name="export_png">Export PNG</string>
+    <string name="no_pages">No pages yet. Tap “Scan / import pages”.</string>
 </resources>
