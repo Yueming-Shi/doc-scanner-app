@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <FrameLayout android:id="@+id/camera_group" android:layout_width="match_parent" android:layout_height="match_parent">
+        <androidx.camera.view.PreviewView android:id="@+id/preview"
+            android:layout_width="match_parent" android:layout_height="match_parent" />
+        <ca.yueming.docscan.passport.ui.GuideOverlayView
+            android:layout_width="match_parent" android:layout_height="match_parent" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:background="#99000000" android:textColor="#FFFFFF" android:padding="8dp"
+            android:text="Plain white wall behind you, even light. Fit your head in the oval, eyes on the line, look straight, mouth closed." />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_gravity="bottom" android:orientation="horizontal" android:background="#99000000">
+            <Button android:id="@+id/btn_switch" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Switch camera" />
+            <Button android:id="@+id/btn_capture" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Capture" />
+            <Button android:id="@+id/btn_pick" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="From gallery" />
+        </LinearLayout>
+    </FrameLayout>
+    <ScrollView android:id="@+id/result_group" android:layout_width="match_parent" android:layout_height="match_parent"
+        android:visibility="gone" android:background="?android:colorBackground">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="12dp">
+            <ImageView android:id="@+id/result_image" android:layout_width="match_parent" android:layout_height="360dp"
+                android:scaleType="fitCenter" android:background="#888888" />
+            <TextView android:id="@+id/result_checks" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingTop="8dp" android:textIsSelectable="true" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingTop="8dp"
+                android:textStyle="italic" android:text="@string/passport_disclaimer" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                <Button android:id="@+id/btn_retake" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Retake" />
+                <Button android:id="@+id/btn_save" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Save photo + 4×6 sheet" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

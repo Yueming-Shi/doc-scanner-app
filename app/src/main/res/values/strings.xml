@@ -7,4 +7,5 @@
     <string name="export_jpeg">Export JPEG</string>
     <string name="export_png">Export PNG</string>
     <string name="no_pages">No pages yet. Tap “Scan / import pages”.</string>
+    <string name="passport_disclaimer">Preview tool only. IRCC requires passport photos to be taken by a commercial photographer or studio, professionally printed (home prints are refused), unaltered, with the studio name, address and date on the back. Final acceptance is up to the photographer and IRCC. Face-height values are estimates.</string>
 </resources>
